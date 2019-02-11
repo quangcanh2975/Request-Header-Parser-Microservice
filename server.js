@@ -30,6 +30,17 @@ app.get("/api/whoami",function(req, res){
   res.json({"ipaddress": ipAddress, "language": req.headers['accept-language'], "software": req.headers['user-agent']});
 });
 
+app.use(function (req, res, next) {
+  res.status(404);
+  res.send('Not found');
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500);
+  res.send('Server Error');
+});
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
